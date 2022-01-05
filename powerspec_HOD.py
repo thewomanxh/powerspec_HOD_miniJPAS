@@ -1,8 +1,8 @@
 import numpy as np
 from astropy.coordinates import *
-import os
 import sys
 import pandas as pd
+
 import colossus
 from colossus import *
 from colossus.cosmology import *
@@ -239,4 +239,5 @@ def FtRho_NFW(imm, ikk, izz, forGas = False):
     ftrho = ftrho/imm*(cosmo.h**2*1.e9*cosmo.rho_c(0))
     ## Unit: Mpc^3 h^-3
     return ftrho
+
 

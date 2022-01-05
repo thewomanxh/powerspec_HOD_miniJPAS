@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+
 ## This code is to read miniJPAS auto correlation calculated by Luis.
 
 fpath = './Data_Input/JPAS/'

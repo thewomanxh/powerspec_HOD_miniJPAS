@@ -5,7 +5,7 @@ import numpy as np
 fpath = './Data_Input/Measurement_Cl_from_carlos/'
 fname_1 = '/msk_miniJPAS_dth_1arcmin/'
 sname_1 = ['map_msk', 'phiR0', 'thetaR0', 'Rmatrix']
-fname_2 = '/pofk_miniJPAS_v2/'
+fname_2 = '/pofk_miniJPAS_v2_finepix/'
 sname_2 = ['map_msk', 'k1d', 'pk_map', 'pk_Poisson', 'dmap_out']
 name_opt_1 = [1, 1, 1, 1]
 name_opt_2 = [0, 0, 0, 0, 1]
@@ -14,7 +14,7 @@ fout = './Data_Output/miniJPAS_cl/'
 cl_opt = 1
 error_opt = 1
 
-#--------------------------------#
+#-----------READ DATA------------#
 for i in range(len(name_opt_1)):
     if name_opt_1[i] == 1:
         fdata = np.load(fpath + fname_1 + sname_1[i] + '.npy', encoding = 'latin1')
@@ -41,7 +41,6 @@ if error_opt == 1:
     for k in range(5):
         relative_error = np.std(pk_poisson[k, :, :], axis = 0) / np.mean(pk_poisson[k, :, :])
         relative_error_obs = pk_map[k, :] *relative_error
-        #print(relative_error, relative_error_obs)
         np.savetxt(fout + 'miniJPAS_' + lum_out[0] + '_' + lum_out[k+1] + '_error.dat', relative_error_obs)
 
 
