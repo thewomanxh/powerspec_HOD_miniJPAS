@@ -82,7 +82,7 @@ def Shot_Noise_CAT():
 
 #----------------------------#
 def __dndm_func(imm, izz, iq_in = 'M', iq_out = 'dndlnM'):
-    mfun = mass_function.massFunction(imm, izz, q_in = iq_in, q_out = iq_out, mdef = 'fof', model = 'watson13')/imm
+    mfun = mass_function.massFunction(imm, izz, q_in = iq_in, q_out = iq_out, mdef = 'fof', model = 'watson13')#/imm
     ## Unit: Mpc^-3 h^3
     return mfun
 
