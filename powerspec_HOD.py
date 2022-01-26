@@ -2,6 +2,7 @@ import numpy as np
 from astropy.coordinates import *
 import sys
 import pandas as pd
+from math import *
 
 import colossus
 from colossus import *
@@ -11,11 +12,13 @@ from colossus.lss import *
 
 from scipy.interpolate import interp1d
 import scipy.special as special
-from math import *
+from scipy.integrate import quad
 
+import Func_Cosmo as Cfunc
 from param_fac import *
-cosmo = cosmology.setCosmology('planck18')
 
+params = {'flat': True, 'H0': 100., 'Om0': 0.3089, 'Ob0': 0.0486, 'sigma8': 0.8161, 'ns': 0.9667}
+cosmo = cosmology.setCosmology('miniJPAS_Cosmo', params)
 ## This code is to calculate Auto correlation power spectrum for miniJPAS.
 
 
@@ -82,7 +85,7 @@ def Shot_Noise_CAT():
 
 #----------------------------#
 def __dndm_func(imm, izz, iq_in = 'M', iq_out = 'dndlnM'):
-    mfun = mass_function.massFunction(imm, izz, q_in = iq_in, q_out = iq_out, mdef = 'fof', model = 'watson13')#/imm
+    mfun = mass_function.massFunction(imm, izz, q_in = iq_in, q_out = iq_out, mdef = 'fof', model = 'watson13')/imm
     ## Unit: Mpc^-3 h^3
     return mfun
 
@@ -135,9 +138,9 @@ def __integrate_PS_gg(ikk, izz, iM_min, iM_1, ialpha):
     nn = 30
     iM_min_ps = iM_min *np.ones(nn); iM_1_ps = iM_1 *np.ones(nn); ialpha_ps = ialpha *np.ones(nn)
 
-    mm_inte_simps = np.logspace(M_min, M_max, num = nn)
+    mm_inte_simps = np.logspace(M_min_dm, M_max_dm, num = nn)
     ps_inte = 0.; ps_inte1 = 0.; ps_inte2 = 0.
-    nbar2 = Nbar(izz, M_min, M_max)**2
+    nbar2 = Nbar(izz, M_min_dm, M_max_dm)**2
     if nbar2 != 0:
         p1h_simps, p2h_simps = Ph_gg_forinte(mm_inte_simps, izz, ikk)
     ps_inte1 = np.trapz(p1h_simps, x = mm_inte_simps)/nbar2
@@ -239,5 +242,6 @@ def FtRho_NFW(imm, ikk, izz, forGas = False):
     ftrho = ftrho/imm*(cosmo.h**2*1.e9*cosmo.rho_c(0))
     ## Unit: Mpc^3 h^-3
     return ftrho
+
 
 

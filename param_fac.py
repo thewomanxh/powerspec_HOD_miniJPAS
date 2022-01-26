@@ -10,29 +10,32 @@ M_min = 2.793e12#[1.e11, 1.e14]
 ## Unit: M_sun
 alpha = 1.243#[0., 2.]
 M_1 = 4.81e13#[1.e11.5, 1.e15.5]
-## Unit: M_sun, if it's the same with M_0, the model is 4 parameters model
+## Unit: M_sun
 
 
 #-------------JPAS and global factors-------------#
-M_max = 16.
+M_max_dm = 16.
 ## Unit: log10(M_sun)
-M_min = 10.
+M_min_dm = 10.
 ## Unit: log10(M_sun)
 
 minzz = 0.01
+## minimum redshift
 maxzz = 2.
+## maximum redshift
 fsky = [1./(4.*np.pi)]
 catntot = 7365.
-## JPAS total catalog numbers.
+## JPAS total catalog numbers
 
 
 #-------------------------------------------------#
-Fit = False
 verbose = False
+## do you want print more information?
 overwrite = False
-Paraller = True
+Paraller = False
+## do you want paraller computer when fitting?
 
-redshift = np.linspace(0., 1.5, num = 30, endpoint = True)
+redshift = np.linspace(minzz, maxzz, num = 30, endpoint = True)
 wavenumber = np.linspace(1, 1000, num = 100, endpoint = True)
 multipole = ([30, 47, 74, 117, 182, 284, 444, 692, 1078, 1680])
 out_path = './Data_Output/'
@@ -41,18 +44,18 @@ out_path = './Data_Output/'
 #--------------------ARGUMENTS-------------------#
 opts, args = getopt.getopt(sys.argv[1:], \
             '-h-v-C:-M:-A:-O-F-P', \
-            ['help', 'verbose', 'Mmin', 'M1', 'Alpha', 'overwrite', 'Fit', 'paraller'])
+            ['help', 'verbose', 'Mmin', 'M1', 'Alpha', 'overwrite', 'paraller'])
 
 for opt_name, opt_value in opts:
     if opt_name in ('-h', '--help'):
         print(' ')
-        print(' -h --help')
-        print(' -v --verbose        |[default: True]')
-        print(' -C --Mmin           |a parameter min Mass, format: *e**. [default:', M_min, ']')
-        print(' -M --M1             |a parameter Mass1, format: *e**. [default:', M_1, ']')
-        print(' -A --Alpha          |a parameter alpha. [default:', alphs, ']')
-        print(' -O --Overwrite      |Overwrite the output file.  [default: False]')
-        print(' -F --Fit            |use Emcee MCMC. [default: False]')
+        print('---Welcome to use powespec_HOD_miniJPAS!')
+        print(' -h --help           |you can read README at first.')
+        print(' -v --verbose        |print more information. [default: False]')
+        print(' -C --Mmin           |a parameter min Mass, format: *e**. [default:%.4e'%M_min, ']')
+        print(' -M --M1             |a parameter Mass1, format: *e**. [default:%.4e'%M_1, ']')
+        print(' -A --Alpha          |a parameter alpha. [default:', alpha, ']')
+        print(' -O --Overwrite      |overwrite the output file.  [default: False]')
         print(' -P --paraller       |use Paraller. [default: False]')
         exit()
 
@@ -62,11 +65,9 @@ for opt_name, opt_value in opts:
         M_min = float(opt_value)
     if opt_name in ('-M', '--M1'):
         M_1 = float(opt_value)
-        alphs = float(opt_value)
+        alpha = float(opt_value)
     if opt_name in ('-O', '--overwrite'):
         overwrite = True
-    if opt_name in ('-F', '--Fit'):
-        Fit = True
     if opt_name in ('-P', '--paraller'):
         Paraller = True        
 
@@ -76,6 +77,7 @@ print(' ')
 #print('---The initial parameters are in JPAS:')
 #print('   |M_min: %.3e'%M_min)
 #print('   |M_1: %.3e'%M_1)
-#print('   |alphs: %.3f'%alphs)
+#print('   |alpha: %.3f'%alpha)
 #print(' ')
+
 

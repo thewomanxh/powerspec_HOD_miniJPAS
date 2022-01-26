@@ -13,7 +13,7 @@ band_name = ['uJAVA', 'uJPAS', 'g', 'r', 'i', 'J10066']
 ## Order is: uJAVA, uJPAS, g, r, i, J10069
 
 
-#-------------DATA---------------#
+#------------Selection-----------#
 #with open(fpath + fname) as f:
 #    for line in f.readlines():
 #        print(line[14])

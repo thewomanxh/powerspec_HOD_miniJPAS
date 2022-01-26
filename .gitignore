@@ -1,0 +1,8 @@
+*.so
+*.egg
+*.egg-info
+*.txt
+*.dat
+*.fits
+
+

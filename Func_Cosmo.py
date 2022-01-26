@@ -1,20 +1,19 @@
 import numpy as np
 import os
+import sys
+from math import *
+import scipy.integrate as integrate
+from scipy.interpolate import interp1d, interp2d
 
 import colossus
 from colossus import *
 from colossus.cosmology import *
-import scipy.integrate as integrate
-from scipy.interpolate import interp1d, interp2d
-
-import sys
-from math import *
-
 #cosmo = cosmology.setCosmology('planck18')
 params = {'flat': True, 'H0': 100., 'Om0': 0.3089, 'Ob0': 0.0486, 'sigma8': 0.8161, 'ns': 0.9667}
-cosmo = cosmology.setCosmology('myCosmo', params)
+cosmo = cosmology.setCosmology('miniJPAS_Cosmo', params)
 
-## This is the code for cosmological quantity.
+## This is the code for cosmological quantities.
+
 
 #--------------CODES---------------#
 def Distfunc(izz, zi = 1.e-50, form = 'comoving', unit = 'cm'):

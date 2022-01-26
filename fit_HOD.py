@@ -64,12 +64,12 @@ def M1_model(magnitude, L_s, M_t, a_m):
 
 #----------------------------#
 def Mmin_model():
-    ## We do not have this parameter.
+    ## We do not have this parameter temporarily.
     return None
 
 #----------------------------#
 def sigma_model():
-    ## We do not have this parameter.
+    ## We do not have this parameter temporarily.
     return None
 
 #----------------------------#
