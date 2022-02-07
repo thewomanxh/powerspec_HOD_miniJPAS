@@ -17,7 +17,7 @@ from scipy.integrate import quad
 import Func_Cosmo as Cfunc
 from param_fac import *
 
-params = {'flat': True, 'H0': 100., 'Om0': 0.3089, 'Ob0': 0.0486, 'sigma8': 0.8161, 'ns': 0.9667}
+params = {'flat': True, 'H0': 100., 'Om0': 0.3089, 'Ob0': 0.0486, 'sigma8': 0.8161, 'ns': 0.9667, 'h': 0.6774}
 cosmo = cosmology.setCosmology('miniJPAS_Cosmo', params)
 ## This code is to calculate Auto correlation power spectrum for miniJPAS.
 
@@ -94,7 +94,7 @@ def __dndm_func(imm, izz, iq_in = 'M', iq_out = 'dndlnM'):
 def N_hod(imm):
     N_cent = 0.5*(1. + special.erf( (np.log10(imm) - np.log10(iM_cutmin_ps)) /isigma_logm_ps))
     if imm > iM_0_ps:
-        N_sat = N_cent*((imm - iM_0_ps) /iM_1_ps)**ialpha_hod_ps
+        N_sat = N_cent*pow((imm - iM_0_ps) /iM_1_ps), ialpha_hod_ps)
     else:
         N_sat = 0.
     return N_cent, N_sat
@@ -104,10 +104,10 @@ def N_hod(imm):
 def N_hod_3param(imm, iM_min_fix = False, iM_1_fix = False, ialpha_fix = False):
     if iM_min_fix:
         N_cent = np.where((imm-iM_min_fix) > 0., 1, 0)
-        N_sat = N_cent*(np.maximum(imm - iM_min_fix, 0)/iM_1_fix)**ialpha_fix
+        N_sat = N_cent* pow((np.maximum(imm - iM_min_fix, 0)/iM_1_fix), ialpha_fix)
     else:
         N_cent = np.where((imm-iM_min_ps) > 0., 1, 0)
-        N_sat = (np.maximum(imm - iM_min_ps, 0)/iM_1_ps)**ialpha_ps
+        N_sat = pow((np.maximum(imm - iM_min_ps, 0)/iM_1_ps), ialpha_ps)
     return N_cent, N_sat
 
 
@@ -127,7 +127,7 @@ def Ph_gg_forinte(imm, izz, ikk):
     dndm = __dndm_func(imm, izz)
     ftrho = FtRho_NFW(imm, ikk, izz)
     bias = lss.bias.haloBias(imm, izz, mdef = '200c', model = 'tinker10')
-    p1hgg = dndm *(2 *ncent*nsat*ftrho**2 + ncent*nsat**2 *ftrho**2)
+    p1hgg = dndm *(2 *ncent*nsat* pow(ftrho, 2) + ncent* pow(nsat, 2) * pow(ftrho, 2)
     p2hgg = dndm *(ncent + nsat) *bias *ftrho
     return p1hgg, p2hgg
 
@@ -140,11 +140,11 @@ def __integrate_PS_gg(ikk, izz, iM_min, iM_1, ialpha):
 
     mm_inte_simps = np.logspace(M_min_dm, M_max_dm, num = nn)
     ps_inte = 0.; ps_inte1 = 0.; ps_inte2 = 0.
-    nbar2 = Nbar(izz, M_min_dm, M_max_dm)**2
+    nbar2 = pow(Nbar(izz, M_min_dm, M_max_dm), 2)
     if nbar2 != 0:
         p1h_simps, p2h_simps = Ph_gg_forinte(mm_inte_simps, izz, ikk)
     ps_inte1 = np.trapz(p1h_simps, x = mm_inte_simps)/nbar2
-    ps_inte2 = np.trapz(p2h_simps, x = mm_inte_simps)**2/nbar2
+    ps_inte2 = pow(np.trapz(p2h_simps, x = mm_inte_simps), 2) /nbar2
     ps_inte2 = ps_inte2 *Plin(ikk, izz)
     ps_inte = ps_inte1 + ps_inte2
     if verbose:
@@ -159,7 +159,7 @@ def __integrate_CAPS(izz, ibin_num, iM_min, iM_1, ialpha):
     ps = np.zeros(len(izz))
     for i in range(len(izz)):
         ps[i] = __integrate_PS_gg(ikk_inte[i], izz[i], iM_min, iM_1, ialpha)[0]
-    caps_res = win_gg**2 *ps /Cfunc.Distfunc(izz, unit = 'Mpc')**2
+    caps_res = pow(win_gg, 2) *ps / pow(Cfunc.Distfunc(izz, unit = 'Mpc'), 2)
     return caps_res
 
 

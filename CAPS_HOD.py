@@ -10,7 +10,7 @@ from colossus.lss import *
 import compute_HOD as HOD
 import Func_Cosmo as Cfunc
 from param_fac import *
-params = {'flat': True, 'H0': 100., 'Om0': 0.3089, 'Ob0': 0.0486, 'sigma8': 0.8161, 'ns': 0.9667}
+params = {'flat': True, 'H0': 100., 'Om0': 0.3089, 'Ob0': 0.0486, 'sigma8': 0.8161, 'ns': 0.9667, 'h': 0.6774}
 cosmo = cosmology.setCosmology('myCosmo', params)
 
 
@@ -41,7 +41,7 @@ def TheoryDATA(iM_min, iM_1, ialpha, izz, iell, ibin_num):
     for j in range(len(iell)):
         for i in range(len(izz)):
             ps[j, i] = HOD.Integrate_PS_gg((iell[j]+0.5)/Comov_dist[i], izz[i], iM_min, iM_1, ialpha)[0]
-        caps[j] = np.trapz(win_gg**2 *ps[j, :] /Comov_dist**2 /3e5 *Cfunc.Hzfun(izz), x = izz)
+        caps[j] = np.trapz( pow(win_gg, 2) *ps[j, :] /pow(Comov_dist, 2) /3e5 *Cfunc.Hzfun(izz), x = izz)
     return caps
 
 
