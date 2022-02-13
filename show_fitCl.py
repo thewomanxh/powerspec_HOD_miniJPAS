@@ -10,8 +10,7 @@ import time
 
 
 #-----Global parameters------#
-global bin_lum, ibin_num
-bin_lum = ['-25.2', '-17.5', '-20.0', '-21.0', '-22.0', '-23.0']
+global ibin_num
 ibin_num = 2
 
 global M_1_fit, M_min_fit, alpha_fit

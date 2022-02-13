@@ -22,10 +22,6 @@ cosmo = cosmology.setCosmology('miniJPAS_Cosmo', params)
 ## This code is to calculate Auto correlation power spectrum for miniJPAS.
 
 
-#-------Global parameters---------#
-global bin_lum
-bin_lum = ['-25.2', '-17.5', '-20.0', '-21.0', '-22.0', '-23.0']
-
 
 #-------------CODES---------------#
 def get_z(ibin_num, zfilepath = './Data_Input/JPAS/', binfilepath = './Data_Output/'):
