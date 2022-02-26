@@ -8,6 +8,7 @@ from scipy.interpolate import interp1d, interp2d
 import colossus
 from colossus import *
 from colossus.cosmology import *
+
 #cosmo = cosmology.setCosmology('planck18')
 params = {'flat': True, 'H0': 100., 'Om0': 0.3089, 'Ob0': 0.0486, 'sigma8': 0.8161, 'ns': 0.9667, 'h': 0.6774}
 cosmo = cosmology.setCosmology('miniJPAS_Cosmo', params)

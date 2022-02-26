@@ -119,8 +119,8 @@ def Fit_func(M1 = 0, M_min = 0, alpha = 0, Pablo = 0, Xiu = 0):
         imethod = 'TNC'
     if alpha == 1:
         pos = [0.0982841, 80.27598, 10.0]
-        bounds_prior = ((0., 1.), (70., 90.), (1., 20.))
-        imethod = 'Nelder-Mead'
+        bounds_prior = ((0., 1.), (70., 150.), (1., 50.))
+        imethod = 'TNC'
     soln = minimize(chi2, pos, method = imethod, bounds = bounds_prior, tol = 1.e-7, options={'disp': True, 'maxiter': 1000})
     return soln.x
 

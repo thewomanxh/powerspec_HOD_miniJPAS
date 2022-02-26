@@ -7,8 +7,8 @@ from plotParam import *
 ## This file is to show the fit HOD parameters results, this results are supposed to hodpy_miniJPAS/lookup/hod_params.dat.
 
 
-M_min_set = 1
-M1_set = 0
+M_min_set = 0
+M1_set = 1
 alpha_set = 0
 ## 1 for True, 0 for False.
 
@@ -60,20 +60,20 @@ if M_min_set == 1:
     plt.ylim(1.e10, 1.e13)
     plt.ylabel(r'$M_{min}(h^{-1}M_\odot)$')
     plt.savefig('./Data_Output/HOD_params_res/Mmin' + save_name + '.png')
-    np.savetxt('./Data_Output/HOD_params_res/Mmin' + save_name + 'txt', M_3params)
+    np.savetxt('./Data_Output/HOD_params_res/Mmin' + save_name + '.txt', M_3params)
 if M1_set == 1:
     plt.semilogy()
     plt.plot(mag, M1_th)
     plt.ylim([1.e12, 1.e16])
     plt.ylabel(r'$M_1(h^{-1}M_\odot)$')
     plt.savefig('./Data_Output/HOD_params_res/M1' + save_name + '.png')
-    np.savetxt('./Data_Output/HOD_params_res/M1' + save_name + 'txt', M_3params)
+    np.savetxt('./Data_Output/HOD_params_res/M1' + save_name + '.txt', M_3params)
 if alpha_set == 1:
     plt.plot(mag, alpha_th)
     plt.ylim([0.2, 1.6])
     plt.ylabel(r'$\alpha$')
     plt.savefig('./Data_Output/HOD_params_res/alpha' + save_name + '.png')
-    np.savetxt('./Data_Output/HOD_params_res/alpha' + save_name + 'txt', M_3params)
+    np.savetxt('./Data_Output/HOD_params_res/alpha' + save_name + '.txt', M_3params)
 plt.tight_layout()
 plt.show()
 
