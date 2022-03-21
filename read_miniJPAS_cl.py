@@ -5,7 +5,7 @@ import numpy as np
 fpath = './Data_Input/Measurement_Cl_from_carlos/'
 fname_1 = '/msk_miniJPAS_dth_1arcmin/'
 sname_1 = ['map_msk', 'phiR0', 'thetaR0', 'Rmatrix']
-fname_2 = '/pofk_miniJPAS_v2_finepix/'
+fname_2 = '/pofk_miniJPAS_20220314/'
 sname_2 = ['map_msk', 'k1d', 'pk_map', 'pk_Poisson', 'dmap_out']
 name_opt_1 = [1, 1, 1, 1]
 name_opt_2 = [0, 0, 0, 0, 1]

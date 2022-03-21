@@ -102,7 +102,7 @@ def M1(magnitude, L_s, M_t, a_m, f=1.0):
     return 10**M_interpolator(magnitude, L_s, M_t, a_m)
 
 #---------------------------------#
-def M0(magnitude, M0_A, M0_B):
+def M0(magnitude, Mmin_A, Mmin_B):
     """
     HOD parameter M0, which sets the cut-off mass scale for satellites
     satellites
@@ -110,11 +110,11 @@ def M0(magnitude, M0_A, M0_B):
         magnitude: array of absolute magnitude threshold
         redshift:  array of halo redshifts
     Returns:
-        array of M0
+        array of Mmin, since actually our M_min is M0
     """
     log_lum_z0 = (4.76 - magnitude)/2.5
 
-    return 10**(M0_A*log_lum_z0 + M0_B)
+    return 10**(Mmin_A*log_lum_z0 + Mmin_B)
 
 
 #---------------------------------#

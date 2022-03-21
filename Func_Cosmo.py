@@ -10,7 +10,7 @@ from colossus import *
 from colossus.cosmology import *
 
 #cosmo = cosmology.setCosmology('planck18')
-params = {'flat': True, 'H0': 100., 'Om0': 0.3089, 'Ob0': 0.0486, 'sigma8': 0.8161, 'ns': 0.9667, 'h': 0.6774}
+params = {'flat': True, 'H0': 100., 'Om0': 0.3089, 'Ob0': 0.0486, 'sigma8': 0.8161, 'ns': 0.9667}#, 'h': 0.6774}
 cosmo = cosmology.setCosmology('miniJPAS_Cosmo', params)
 
 ## This is the code for cosmological quantities.
@@ -48,8 +48,8 @@ def Dist_comov_inte(izz):
 #----------------------------------#
 def Ezfunc(izz):
 ## the same with hzfun in angular.
-    f = np.sqrt(cosmo.Ode(0) + cosmo.Om(0) *pow((1. + izz), 3) + \
-            (1 - cosmo.Om(0) - cosmo.Ode(0)) *pow((1. + izz), 2))
+    f = np.sqrt(cosmo.Ode(0) + cosmo.Om(0) *(1. + izz)**3 + \
+            (1 - cosmo.Om(0) - cosmo.Ode(0)) *(1. + izz)**2)
     return f
  
  

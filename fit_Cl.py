@@ -15,7 +15,7 @@ from param_fac import *
 #-----Global parameters------#
 global bin_lum, ibin_num
 bin_lum = ['-25.2', '-17.5', '-20.0', '-21.0', '-22.0', '-23.0']
-ibin_num = 0
+ibin_num = 1
 
 global M_1_fit, M_min_fit, alpha_fit
 zz_inte = np.linspace(0.2, 0.6, num = 20, endpoint = True)
@@ -26,8 +26,11 @@ Nerr = np.array([0.000594, 0.000521, 0.000454, 0.000315, 0.000218, 0.000113])
 
 global ell_data, ms_data, ms_var, ell_interp
 ell_data, ms_data, ms_var = HOD.MeasurementDATA(ibin_num)
-ell_interp = np.logspace(np.log10(400), np.log10(22000), 10) 
-## notice the range of \ell.
+ell_data = ell_data[0:18]
+ms_data = ms_data[0:18]
+ms_var = ms_var[0:18]
+ell_interp = np.logspace(np.log10(200), np.log10(4300), 10) 
+## FIXME: notice the range of \ell.
 
 
 #----------------------------#
@@ -39,8 +42,8 @@ def log_likelihood(theta):
     Fitsdata = th_data - ms_data
 
     Nall = HOD.Ndensity_g(0.4, 10.**M_min_fit, 10.**M_1_fit, alpha_fit)
-    Nfit = Nall - Ndata[ibin_num]
-    chi2 = sum(Fitsdata**2/ms_var**2) + Nfit**2/Nerr[ibin_num]**2
+    #Nfit = Nall - Ndata[ibin_num]
+    chi2 = sum(Fitsdata**2/ms_var**2) #+ Nfit**2/Nerr[ibin_num]**2
     print(M_min_fit, M_1_fit, alpha_fit)
     print('---chi2: %.3f'%chi2)
     return -0.5*chi2
