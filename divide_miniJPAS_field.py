@@ -1,14 +1,15 @@
 import numpy as np
+import sys
 import  matplotlib.pyplot as plt
 
 ## This code is to divide miniJPAS field into Nsamples subregions.
 
 
 #---------Global parameters-------#
+Nsamples = 20
 global bin_lum
 bin_lum = ['-25.2', '-17.5', '-20.0', '-21.0', '-22.0', '-23.0']
-bin_num = 0
-Nsamples = 20
+bin_num = int(sys.argv[1])
 
 
 ## Divide Nsamples samples.

@@ -14,8 +14,10 @@ from param_fac import *
 
 #-----Global parameters------#
 global bin_lum, ibin_num
-bin_lum = ['-25.2', '-17.5', '-20.0', '-21.0', '-22.0', '-23.0']
-ibin_num = 1
+lum_out = ['-25.2', '-23.0', '-22.5', '-22.0', '-21.5', '-21.0', '-20.5', '-20.0']
+#bin_lum = ['-25.2', '-17.5', '-20.0', '-21.0', '-22.0', '-23.0']
+ibin_num = int(sys.argv[1])
+
 
 global M_1_fit, M_min_fit, alpha_fit
 zz_inte = np.linspace(0.2, 0.6, num = 20, endpoint = True)

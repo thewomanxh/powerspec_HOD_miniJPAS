@@ -150,7 +150,11 @@ def __integrate_PS_gg(ikk, izz, iM_min, iM_1, ialpha):
 
 #----------------------------#
 def __integrate_CAPS(izz, ibin_num, iM_min, iM_1, ialpha):
-    izz_dist = np.sort(np.loadtxt('./Data_Output/miniJPAS_redshift/miniJPAS_zz_nostar_iband_selection_' + bin_lum[0] + '_' + bin_lum[ibin_num+1] + '.txt')[:, 5])
+    #izz_dist = np.sort(np.loadtxt('./Data_Output/miniJPAS_redshift/miniJPAS_zz_nostar_iband_selection_' + bin_lum[0] + '_' + bin_lum[ibin_num+1] + '.txt')[:, 5])
+    
+    zfile = ('./Data_Output/Pablo_out/test3_HODmock_z0.3z0.5_absmag' + str(-float(bin_lum[ibin_num+1])) +'.csv') 
+    full_data = np.array(pd.read_csv(zfile))
+    izz_dist = np.sort(full_data[:, 10])
     win_gg = Winfunc_auto(izz, izz_dist)
     ps = np.zeros(len(izz))
     for i in range(len(izz)):
