@@ -14,9 +14,9 @@ from param_fac import *
 
 #-----Global parameters------#
 global bin_lum, ibin_num
-lum_out = ['-25.2', '-23.0', '-22.5', '-22.0', '-21.5', '-21.0', '-20.5', '-20.0']
+bin_lum = ['-25.2', '-20.0', '-20.5', '-21.0', '-21.5', '-22.0', '-22.5', '-23.0']
 #bin_lum = ['-25.2', '-17.5', '-20.0', '-21.0', '-22.0', '-23.0']
-ibin_num = int(sys.argv[1])
+ibin_num = 4#int(sys.argv[1])
 
 
 global M_1_fit, M_min_fit, alpha_fit
@@ -28,10 +28,10 @@ Nerr = np.array([0.000594, 0.000521, 0.000454, 0.000315, 0.000218, 0.000113])
 
 global ell_data, ms_data, ms_var, ell_interp
 ell_data, ms_data, ms_var = HOD.MeasurementDATA(ibin_num)
-ell_data = ell_data[0:18]
-ms_data = ms_data[0:18]
-ms_var = ms_var[0:18]
-ell_interp = np.logspace(np.log10(200), np.log10(4300), 10) 
+ell_data = ell_data[0:93]
+ms_data = ms_data[0:93]
+ms_var = ms_var[0:93]
+ell_interp = np.logspace(np.log10(200), np.log10(20000), 10) 
 ## FIXME: notice the range of \ell.
 
 
@@ -91,7 +91,7 @@ if Paraller:
 else:
     sampler = emcee.EnsembleSampler(nwalkers, ndim, log_probability, args = ())
 
-sampler.run_mcmc(pos, 2000, progress = True)
+sampler.run_mcmc(pos, 50, progress = True)
 #tau = sampler.get_autocorr_time()
 samples = sampler.get_chain()
 np.save(out_path + 'Fit_res/HOD_' + bin_lum[0] + '_' + bin_lum[ibin_num + 1] + '_samples_3param', samples)
