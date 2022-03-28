@@ -43,7 +43,7 @@ def log_likelihood(theta):
     th_data = func(ell_data)
     Fitsdata = th_data - ms_data
 
-    Nall = HOD.Ndensity_g(0.4, 10.**M_min_fit, 10.**M_1_fit, alpha_fit)
+    #Nall = HOD.Ndensity_g(0.4, 10.**M_min_fit, 10.**M_1_fit, alpha_fit)
     #Nfit = Nall - Ndata[ibin_num]
     chi2 = sum(Fitsdata**2/ms_var**2) #+ Nfit**2/Nerr[ibin_num]**2
     print(M_min_fit, M_1_fit, alpha_fit)
@@ -91,13 +91,12 @@ if Paraller:
 else:
     sampler = emcee.EnsembleSampler(nwalkers, ndim, log_probability, args = ())
 
-sampler.run_mcmc(pos, 50, progress = True)
+sampler.run_mcmc(pos, 2000, progress = True)
 #tau = sampler.get_autocorr_time()
-samples = sampler.get_chain()
-np.save(out_path + 'Fit_res/HOD_' + bin_lum[0] + '_' + bin_lum[ibin_num + 1] + '_samples_3param', samples)
 
 labels = ["M_min", "M_1", "alpha_hod"]
 flat_samples = sampler.get_chain(discard = 10, thin = 15, flat=True)
+np.save(out_path + 'Fit_res/HOD_' + bin_lum[0] + '_' + bin_lum[ibin_num + 1] + '_samples_3param', flat_samples)
 
 
 #----------------------------#
