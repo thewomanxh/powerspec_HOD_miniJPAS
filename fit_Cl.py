@@ -38,16 +38,19 @@ ell_interp = np.logspace(np.log10(200), np.log10(20000), 10)
 #----------------------------#
 def log_likelihood(theta):
     M_min_fit, M_1_fit, alpha_fit = theta
+    t=time.time()
     th_interp = HOD.TheoryDATA(10.**M_min_fit, 10.**M_1_fit, alpha_fit, zz_inte, ell_interp, ibin_num)
     func = interp1d(ell_interp, th_interp, kind = 'linear')
     th_data = func(ell_data)
+    print(th_data, time.time()-t);exit()
     Fitsdata = th_data - ms_data
 
     #Nall = HOD.Ndensity_g(0.4, 10.**M_min_fit, 10.**M_1_fit, alpha_fit)
     #Nfit = Nall - Ndata[ibin_num]
     chi2 = sum(Fitsdata**2/ms_var**2) #+ Nfit**2/Nerr[ibin_num]**2
-    print(M_min_fit, M_1_fit, alpha_fit)
-    print('---chi2: %.3f'%chi2)
+
+    print('---chi2: %.3f'%chi2, '\n')
+    print('   %.3f'%M_min_fit, '%.3f'%M_1_fit, '%.3f'%alpha_fit)
     return -0.5*chi2
 
 

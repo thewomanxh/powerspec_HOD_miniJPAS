@@ -11,7 +11,7 @@ import time
 
 #-----Global parameters------#
 global ibin_num
-ibin_num = 2
+ibin_num = 1
 
 global M_1_fit, M_min_fit, alpha_fit
 #zz_inte = np.linspace(0.001, 1.5, num = 20, endpoint = True)
@@ -26,13 +26,11 @@ t1 = time.time()
 
 #----------------------------#
 ell_data, ms_data, ms_var = HOD.MeasurementDATA(ibin_num)
-ell_data = ell_data[2:48]
-ms_data = ms_data[2:48]
-ms_var = ms_var[2:48]
-Fitting = np.array([[11.501961, 13.198678, 1.089903], [11.573894, 13.240629, 1.130207], [11.698694, 13.318858, 1.135367], [11.882649, 13.522107, 1.135342], [12.167323, 13.986156, 0.827222]])
-#Fitting = np.array([[11.454, 13.10249, 0.534], [11.660, 12.916, 0.715], [11.711, 13.152, 0.789], [12.083, 13.547, 0.899], [12.146, 13.986, 0.701]])
-#Fitting = np.array([[11.245, 11.224, 0.500], [11.661, 13.007, 0.655], [11.865, 12.838, 0.503], [11.995, 12.929, 0.554], [12.146, 13.986, 0.701]])
-## chi2:  1508, 71, 399, 75 
+ell_data = ell_data[0:93]
+ms_data = ms_data[0:93]
+ms_var = ms_var[0:93]
+Fitting = np.array([[10.952, 11.484, 0.513], [10.941, 11.639, 0.530], [11.332, 12.520, 0.620], [11.579, 12.058, 0.616], [11.847, 12.035, 0.660], [11.984, 12.070, 1.123], [11.656, 12.011, 1.405]])
+#Fitting = np.array([[11.501961, 13.198678, 1.089903], [11.573894, 13.240629, 1.130207], [11.698694, 13.318858, 1.135367], [11.882649, 13.522107, 1.135342], [12.167323, 13.986156, 0.827222]])
 
 M_min_fit = 10.**(Fitting[ibin_num, 0])
 M_1_fit = 10**(Fitting[ibin_num, 1])
@@ -44,17 +42,17 @@ if TheoryOnly == False:
     #print('---Measurement Data is: \n', ms_data, '\n', ' ')
 
     Tout = HOD.TheoryDATA(M_min_fit, M_1_fit, alpha_fit, zz_inte, ell_data, ibin_num)
-    Nall = HOD.Ndensity_g(0.4, M_min_fit, M_1_fit, alpha_fit)
-    Nfit = Nall - Ndata[ibin_num]
+    #Nall = HOD.Ndensity_g(0.4, M_min_fit, M_1_fit, alpha_fit)
+    #Nfit = Nall - Ndata[ibin_num]
     #print('---Theoretical Data is: \n', Tout)
-    print('\n---Total numbers: ', Nall, Ndata[ibin_num])
-    print('\n---chi2: ', sum((ms_data-Tout)**2/ms_var**2) + Nfit**2/Nerr[ibin_num]**2)
+    #print('\n---Total numbers: ', Nall, Ndata[ibin_num])
+    #print('\n---chi2: ', sum((ms_data-Tout)**2/ms_var**2) + Nfit**2/Nerr[ibin_num]**2)
     print('\n---time: ', time.time()-t1)
 
 
 #----------------------------#
 if TheoryOnly:
-    colors = ['#b7e1a1', '#75b84f', '#699d4c', '#3f9b0b', '#388004']
+    colors = ['#d3eef5', '#b3e6f2', '#8ed4e6', '#67bacf', '#3e93a8', '#238199', '#09647a', '#033642'] 
     fig = plt.figure(1, (18, 14))
     plt.loglog()
 
@@ -64,12 +62,12 @@ if TheoryOnly:
         plt.plot(ell_data, Tout, color = colors[i], label = bin_lum[i+1])
 
     plt.xlim(min(ell_data)-10, max(ell_data)+1000)
-    plt.ylim(1.e-9, 1.e-5)
+    plt.ylim(1.e-9, 1.e-4)
     plt.xlabel(r'$\mathrm{Multipole\, }\ell$', fontsize = 14)
     plt.ylabel(r'$C_\ell$', fontsize = 15)
     plt.legend(loc = 'best', fontsize = 12, frameon = False)
     plt.tight_layout()
-    plt.savefig('./Data_Output/Fit_res/All_Cl_miniJPAS.png')
+    #plt.savefig('./Data_Output/Fit_res/All_Cl_miniJPAS.png')
     plt.show()
 
 else:
@@ -78,7 +76,7 @@ else:
     plt.errorbar(ell_data, ms_data, yerr = ms_var, color = 'blue', fmt = 'h', linewidth = 1, markersize = 7, capsize = 5, label = 'Measurment')
     plt.plot(ell_data, Tout, label = 'Theoretical fit')
     plt.xlim(min(ell_data)-10, max(ell_data)+1000)
-    plt.ylim(1.e-9, 1.e-5)
+    plt.ylim(1.e-9, 1.e-4)
     plt.text(min(ell_data)+20, 2.e-8, s = str(Fitting[ibin_num, :]), fontsize = 12)
     plt.xlabel(r'$\mathrm{Multipole\, }\ell$', fontsize = 14)
     plt.ylabel(r'$C_\ell$', fontsize = 15)

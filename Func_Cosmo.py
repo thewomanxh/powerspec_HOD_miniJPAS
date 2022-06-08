@@ -10,14 +10,14 @@ from colossus import *
 from colossus.cosmology import *
 
 #cosmo = cosmology.setCosmology('planck18')
-params = {'flat': True, 'H0': 100., 'Om0': 0.3089, 'Ob0': 0.0486, 'sigma8': 0.8161, 'ns': 0.9667}#, 'h': 0.6774}
+params = {'flat': True, 'H0': 67.74, 'Om0': 0.3089, 'Ob0': 0.0486, 'sigma8': 0.8161, 'ns': 0.9667}#, 'h': 0.6774}
 cosmo = cosmology.setCosmology('miniJPAS_Cosmo', params)
 
 ## This is the code for cosmological quantities.
 
 
 #--------------CODES---------------#
-def Distfunc(izz, zi = 1.e-50, form = 'comoving', unit = 'cm'):
+def Distfunc(izz, zi = 1.e-50, form = 'comoving', unit = 'cm', ih = False):
 ## This is the cosmological distance after integate, choose distance mode and units.
     if form == 'luminosity':
         dist = cosmo.luminosityDistance(izz)
@@ -28,11 +28,12 @@ def Distfunc(izz, zi = 1.e-50, form = 'comoving', unit = 'cm'):
     ## all in units of Mpc/h
     else:
         raise Exception("Error: line", sys._getframe().f_lineno, ": Please input recognized format.")
-
+    if ih == False:
+        ih = cosmo.h
     if unit == 'cm':
-        res = dist *3.08567758128E+24 *cosmo.h
+        res = dist *3.08567758128E+24 *ih
     elif unit == 'Mpc':
-        res = dist *cosmo.h
+        res = dist *ih
     else:
         raise Exception("Error: line", sys._getframe().f_lineno, ": Please input recognized format.")
     return res

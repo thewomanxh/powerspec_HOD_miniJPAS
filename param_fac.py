@@ -14,7 +14,7 @@ M_1 = 4.81e13#[1.e11.5, 1.e15.5]
 
 
 #-------------JPAS and global factors-------------#
-M_max_dm = 16.
+M_max_dm = 18.
 ## Unit: log10(M_sun)
 M_min_dm = 10.
 ## Unit: log10(M_sun)
@@ -41,10 +41,10 @@ wavenumber = np.linspace(1, 1000, num = 100, endpoint = True)
 multipole = ([30, 47, 74, 117, 182, 284, 444, 692, 1078, 1680])
 out_path = './Data_Output/'
 
-
+"""
 #--------------------ARGUMENTS-------------------#
 opts, args = getopt.getopt(sys.argv[1:], \
-            '-h-v-C:-M:-A:-O-F-P', \
+            '-h-v-C:-M:-A:-O-P', \
             ['help', 'verbose', 'Mmin', 'M1', 'Alpha', 'overwrite', 'paraller'])
 
 for opt_name, opt_value in opts:
@@ -71,7 +71,7 @@ for opt_name, opt_value in opts:
         overwrite = True
     if opt_name in ('-P', '--paraller'):
         Paraller = True        
-
+"""
 
 #---------------------PRINT----------------------#
 print(' ')

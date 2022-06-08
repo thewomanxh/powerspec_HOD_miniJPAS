@@ -14,19 +14,21 @@ alpha_set = 0
 
 Pablo_set = 1
 Xiu_set = 0
+Pablo_file = './Data_Output/Pablo_out/3param_out.csv'
+Xiu_file = './Data_Output/Xiu_out/hod_3param.dat'
 
 
 #----------------------------#
 mag = np.arange(-23.5, -17., 0.1)[::-1]
 if Pablo_set == 1:
-    ms_raw = hodfit.read_data(f = './Data_Output/Pablo_out/3param_out.csv', M1 = M1_set, M_min = M_min_set, alpha = alpha_set)
-    mag_raw = np.loadtxt('./Data_Output/Pablo_out/3param_out.csv')[:-1, 0]
+    ms_raw = hodfit.read_data(f = Pablo_file, M1 = M1_set, M_min = M_min_set, alpha = alpha_set)
+    mag_raw = np.loadtxt(Pablo_file)[:-1, 0]
     save_name = '_fit_Pablo'
     ms_data = ms_raw[:-1, 2]
     
 if Xiu_set == 1:
-    ms_raw = hodfit.read_Xiudata(f = './Data_Output/Xiu_out/hod_3param.dat', M1 = M1_set, M_min = M_min_set, alpha = alpha_set)
-    mag_raw = np.loadtxt('./Data_Output/Xiu_out/hod_3param.dat')[:-1, 0]
+    ms_raw = hodfit.read_Xiudata(f = Xiu_file, M1 = M1_set, M_min = M_min_set, alpha = alpha_set)
+    mag_raw = np.loadtxt(Xiu_file)[:-1, 0]
     save_name = '_fit_xiu'
 
 M_3params = hodfit.Fit_func(M_min = M_min_set, M1 = M1_set, alpha = alpha_set, Pablo = Pablo_set, Xiu = Xiu_set)

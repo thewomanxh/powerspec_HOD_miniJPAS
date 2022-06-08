@@ -3,6 +3,7 @@ from astropy.coordinates import *
 import sys
 import pandas as pd
 from math import *
+import time
 
 import colossus
 from colossus import *
@@ -12,7 +13,7 @@ from colossus.lss import *
 
 from scipy.interpolate import interp1d
 import scipy.special as special
-from scipy.integrate import quad
+from scipy.integrate import quad, simps
 
 import Func_Cosmo as Cfunc
 from param_fac import *
@@ -109,20 +110,20 @@ def N_hod_3param(imm, iM_min_fix = False, iM_1_fix = False, ialpha_fix = False):
 
 #----------------------------#
 def Nbar(izz, iM_min, iM_max):
-    mm_inte_simps = np.logspace(iM_min, iM_max, num = 30)
+    mm_inte_simps = np.logspace(iM_min, iM_max, num = 40)
     N_cent, N_sat= N_hod_3param(mm_inte_simps)
     nbar_simps = __dndm_func(mm_inte_simps, izz) *(N_cent + N_sat)
-    nbar = np.trapz(nbar_simps, mm_inte_simps, 30)
+    nbar = np.trapz(nbar_simps, mm_inte_simps)
     ## Unit: Mpc^-3 h^3
     return nbar
 
 
 #----------------------------#
 def Ph_gg_forinte(imm, izz, ikk):
+    bias = lss.bias.haloBias(imm, izz, mdef = '200c', model = 'tinker10')
     ncent, nsat = N_hod_3param(imm)
     dndm = __dndm_func(imm, izz)
     ftrho = FtRho_NFW(imm, ikk, izz)
-    bias = lss.bias.haloBias(imm, izz, mdef = '200c', model = 'tinker10')
     p1hgg = dndm *(2 *ncent*nsat* ftrho**2 + ncent* nsat**2 * ftrho**2)
     p2hgg = dndm *(ncent + nsat) *bias *ftrho
     return p1hgg, p2hgg
@@ -131,15 +132,15 @@ def Ph_gg_forinte(imm, izz, ikk):
 #----------------------------#
 def __integrate_PS_gg(ikk, izz, iM_min, iM_1, ialpha):
     global iM_min_ps, iM_1_ps, ialpha_ps
-    nn = 30
-    iM_min_ps = iM_min *np.ones(nn); iM_1_ps = iM_1 *np.ones(nn); ialpha_ps = ialpha *np.ones(nn)
-
+    nn = 40
+    #iM_min_ps = iM_min *np.ones(nn); iM_1_ps = iM_1 *np.ones(nn); ialpha_ps = ialpha *np.ones(nn)
+    iM_min_ps = 1e11*np.ones(nn); iM_1_ps = 1e13*np.ones(nn); ialpha_ps = 0.7*np.ones(nn)
     mm_inte_simps = np.logspace(M_min_dm, M_max_dm, num = nn)
     ps_inte = 0.; ps_inte1 = 0.; ps_inte2 = 0.
     nbar2 = pow(Nbar(izz, M_min_dm, M_max_dm), 2)
     if nbar2 != 0:
         p1h_simps, p2h_simps = Ph_gg_forinte(mm_inte_simps, izz, ikk)
-    ps_inte1 = np.trapz(p1h_simps, x = mm_inte_simps)/nbar2
+    ps_inte1 = np.trapz(p1h_simps, x = mm_inte_simps) /nbar2
     ps_inte2 = pow(np.trapz(p2h_simps, x = mm_inte_simps), 2) /nbar2
     ps_inte2 = ps_inte2 *Plin(ikk, izz)
     ps_inte = ps_inte1 + ps_inte2
