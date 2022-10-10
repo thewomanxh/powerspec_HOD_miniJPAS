@@ -1,12 +1,12 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
+#Copyright (c) Xiu-hui Tan
+## This code is to build k correction for JPAS.
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import Func_Cosmo as Cfunc
 from plotParam import *
-#Copyright (c) Xiu-hui Tan
-## This code is to build k correction for JPAS.
 
 fpath = './Data_Input/JPAS/'
 fcsv = 'minijpas_pdr201912_cat_wAbsMag_v1.csv'

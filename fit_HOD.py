@@ -76,6 +76,7 @@ def sigma_model():
 def M_interpolator(magout, L_s, M_t, a_m):
     log_mass = np.arange(12, 16, 0.001)[::-1]
     magnitudes = M1_model_prior(log_mass, L_s, M_t, a_m)
+    print(L_s, M_t, a_m, magnitudes)
     f = RegularGridInterpolator((magnitudes,), log_mass, bounds_error=False, fill_value=None)
     res = (f(magout))
     return res
@@ -115,7 +116,7 @@ def Fit_func(M1 = 0, M_min = 0, alpha = 0, Pablo = 0, Xiu = 0):
         imethod = 'Nelder-Mead'
     if M1 == 1:
         pos = [3.70558341e+09, 4.77678420e+11, 3.05963831e-01]
-        bounds_prior = ((1.e8, 1.e10), (1.e11, 1.e14), (0.1, 3.))
+        bounds_prior = ((1.e8, 1.e10), (1.e11, 1.e13), (0.1, 3.))
         imethod = 'TNC'
     if alpha == 1:
         pos = [0.0982841, 80.27598, 10.0]
